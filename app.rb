@@ -3,6 +3,7 @@
 require 'sinatra'
 require 'sinatra/activerecord'
 require './app/controller/user_controller'
+require './app/service/jwt/generate_token'
 require './app/controller/current_weather_controller'
 require 'dotenv'
 Dotenv.load
@@ -16,6 +17,11 @@ end
 post '/users/register' do
   req = JSON.parse(request.body.read)
   { new_user: UserController.create(req) }.to_json
+end
+
+post '/token' do
+  req = JSON.parse(request.body.read)
+  {token: GenarateToken.new.call(req["email"])}.to_json
 end
 
 get '/users/:email' do
