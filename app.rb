@@ -21,7 +21,7 @@ end
 
 post '/token' do
   req = JSON.parse(request.body.read)
-  {token: GenarateToken.new.call(req["email"])}.to_json
+  { token: GenarateToken.new.call(req['email']) }.to_json
 end
 
 get '/users/:email' do
