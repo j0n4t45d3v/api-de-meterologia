@@ -8,7 +8,7 @@ module Users
     end
 
     def call
-      @repository.find_by(email:@id)
+      @repository.find_by(email: @id)
     end
   end
 end

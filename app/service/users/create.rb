@@ -13,8 +13,8 @@ module Users
     end
 
     def call
-      encode_password =  BCrypt::Password.create(@params["password"])
-      user = @user.new(username: @params["username"], email: @params["email"], password: encode_password)
+      encode_password = BCrypt::Password.create(@params['password'])
+      user = @user.new(username: @params['username'], email: @params['email'], password: encode_password)
       @repository.create!(user.to_hash)
     end
   end

@@ -7,7 +7,7 @@ require './app/controller/current_weather_controller'
 require 'dotenv'
 Dotenv.load
 
-set :database, { adapter: ENV['DB_ADAPTER'], database: ENV['DB_URI'] }
+set :database, { adapter: ENV.fetch('DB_ADAPTER', nil), database: ENV.fetch('DB_URI', nil) }
 
 before do
   content_type :json

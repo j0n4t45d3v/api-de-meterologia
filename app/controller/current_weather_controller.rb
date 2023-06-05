@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './app/service/forecast/current_weather_by_city'
 require './app/service/forecast/current_weather_by_zipcode'
 
