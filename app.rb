@@ -9,13 +9,17 @@ require 'dotenv'
 Dotenv.load
 
 set :database, { adapter: ENV.fetch('DB_ADAPTER', nil), database: ENV.fetch('DB_URI', nil) }
-set :bind, "0.0.0.0"
+set :bind, '0.0.0.0'
 
 host = ARGV[0] || 'localhost' # Padrão: localhost
 set :host, host
 
 before do
   content_type :json
+end
+
+get '/' do
+  { name: 'Api de meterologia', version: '0.0.1' }.to_json
 end
 
 post '/users/register' do
@@ -32,10 +36,6 @@ get '/users/:email' do
   { user: UserController.find(params[:email]) }.to_json
 end
 
-get '/forecast/city/:city' do
-  { forecast: CurrentWeatherController.find_by_city(params[:city], 'metric ') }.to_json
+get '/forecast/:city' do
+  { forecast: CurrentWeatherController.find_by_city(params[:city], 'metric') }.to_json
 end
-
-# get '/forecast/zipcode/:zipcode' do
-#   { forecast: CurrentWeatherController.find_by_zipcode(params[:zipcode], 'metric') }.to_json
-# end

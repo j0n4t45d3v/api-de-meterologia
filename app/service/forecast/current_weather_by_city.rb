@@ -12,19 +12,26 @@ module Forecast
     end
 
     def call
-      url = "https://api.openweathermap.org/data/2.5/weather?q=#{@city}&lang=pt_br&units=#{@metric}&appid=#{ENV.fetch(
-        'KEY_API', nil
-      )}"
-      request = RestClient.get(url)
-      response = JSON.parse(request.body)
+      get = fetch
+      response = JSON.parse(get)
 
       {
         temp: response['main'], # retorna em %
         description: response['weather'][0]['description'],
         country: response['sys']['country'],
-        cloud: response['clouds']['all'], # retorna em %
+        cloud: "#{response['clouds']['all']}%",
         wind: response['wind']
-      } # temperatura, vento, humidade
+      }
+    end
+
+    private
+    def fetch
+      url = 'https://api.openweathermap.org/data/2.5/weather'
+      request = RestClient.get("#{url}?q=#{@city}&lang=pt_br&units=#{@metric}&appid=#{ENV.fetch(
+        'KEY_API', nil
+      )}")
+
+      request.body
     end
   end
 end
